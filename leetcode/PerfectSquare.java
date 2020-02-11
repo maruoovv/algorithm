@@ -4,7 +4,12 @@ import java.util.List;
 import java.util.Queue;
 
 public class PerfectSquare {
-    public  int numSquares(int n) {
+    /*
+        합이 n 이 되는 perfect square 의 최소 갯수를 구하는 문제.
+        처음엔 dp로 접근했다가, 규칙을 찾는게 어려워서 BFS 로 품. BFS가 훨씬 심플한듯.
+        결국 n 까지 가는 최소 횟수를 구하는 거니, BFS 를 이용해 각 perfect square 의 합이 도달하는 지점의 최솟값을 구함
+     */
+    public int numSquares(int n) {
         List<Integer> list = new ArrayList<>();
 
         for (int i = 1; i*i <= n; i++) {
