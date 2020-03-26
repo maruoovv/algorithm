@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class PartitionPalindrome {
 	// discuss 보고 품.
@@ -10,6 +11,7 @@ public class PartitionPalindrome {
 		List<String> temp = new ArrayList<>();
 		find(s, 0, res, temp);
 
+		Stack<Integer> stack = new Stack<>();
 		return res;
 	}
 
