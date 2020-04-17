@@ -14,7 +14,7 @@ public class NumberOfIslands {
 
 	// 섬의 개수를 세는 문제.
 	// BFS 를 이용해 해결.
-	// log(N^2)
+	// O(N^2)
 	public int numIslands(char[][] grid) {
 		if (grid == null || grid.length == 0) return 0;
 
