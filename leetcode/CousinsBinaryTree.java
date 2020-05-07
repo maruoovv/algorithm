@@ -1,44 +1,5 @@
-import javafx.util.Pair;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-public class CousinsBinaryTree {
-
-    // binary tree 안에서 부모가 다르면서 레벨이 같은 노드인지 판단하는 문제.
-    // 간단하게 bfs 를 사용해서 각 노드의 레벨과 부모 노드 정보를 저장했다.
-    // javafx 의 pair 를 쓴게 좀 찝찝
-    public boolean isCousins(TreeNode root, int x, int y) {
-        if (root == null) return false;
-
-        int[] levels = new int[101];
-        int[] parents = new int[101];
-        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
-
-        queue.add(new Pair(root, 0));
-
-        while(!queue.isEmpty()) {
-            Pair<TreeNode, Integer> pair = queue.poll();
-
-            TreeNode node = pair.getKey();
-            Integer level = pair.getValue();
-            levels[node.val] = level;
-
-            if (node.left != null) {
-                queue.add(new Pair(node.left, level + 1));
-                parents[node.left.val] = node.val;
-            }
-            if (node.right != null) {
-                queue.add(new Pair(node.right, level + 1));
-                parents[node.right.val] = node.val;
-            }
-        }
-
-        if (levels[x] == levels[y] && parents[x] != parents[y]) return true;
-
-        return false;
-
-    }
+class CousinsBinaryTree {
 
     public class TreeNode {
         int val;
@@ -46,5 +7,33 @@ public class CousinsBinaryTree {
         TreeNode right;
         TreeNode(int x) { val = x; }
     }
-}
 
+    // binary tree 에서 2개의 노드가 동일 레벨, 다른 부모를 갖고 있는지 검사하는 문제.
+    // 재귀를 돌면서 대상을 찾을 경우 해당 노드의 레벨, 부모 노드의 값을 가지는 배열을 반환한다.
+    public boolean isCousins(TreeNode root, int x, int y) {
+        int[] xfind = find(root, root, x, 0);
+        int[] yfind = find(root, root, y, 0);
+
+        return xfind[0] == yfind[0] && xfind[1] != yfind[1];
+    }
+
+    public int[] find(TreeNode parent, TreeNode root, int target, int level) {
+        if (root == null) return null;
+
+        if (root.val == target) {
+            return new int[]{level, parent.val};
+        }
+
+        if (root.left != null) {
+            int[] ans =  find(root, root.left, target, level + 1);
+            if (ans != null) return ans;
+        }
+
+        if (root.right != null) {
+            int[] ans =  find(root, root.right, target, level + 1);
+            if (ans != null) return ans;
+        }
+
+        return null;
+    }
+}
