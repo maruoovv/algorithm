@@ -39,4 +39,3 @@ public class FloodFill {
         return image;
     }
 }
-}
