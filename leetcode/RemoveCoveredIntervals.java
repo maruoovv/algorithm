@@ -13,6 +13,34 @@ public class RemoveCoveredIntervals {
     // 각 지점에서 시작하는 인터벌을 조사한다.
     // 현재의 인터벌의 끝 점이 현재 큐의 맨 앞의 인터벌의 끝 점보다 크다면, 더는 합쳐질수 없다. (시작점asc, 끝점desc 로 정렬을 했으므로)
     // 이 경우에만 큐의 맨 앞에 넣어준다. (이후 나오는건 시작점이 현재보다 크거나 같은 거 밖에 없으므로, 큐의 뒷부분에 있는 것들은 더이상 합쳐질수 없다.)
+    /*
+        더 깔끔한 풀이
+
+        int len = intervals.length;
+
+        Arrays.sort(intervals, (a, b) -> {
+            if (a[0] > b[0]) return 1;
+            else if (a[0] < b[0]) return -1;
+            else return b[1] - a[1];
+        });
+
+        int right = 0;
+        int count = 0;
+
+        for (int i = 0; i < len; i++) {
+            int x = intervals[i][0];
+            int y = intervals[i][1];
+
+            if (y > right) count++;
+            right = Math.max(right, y);
+        }
+
+        return count;
+
+        이전 설명과 마찬가지로, 시작점은 볼 필요 없고, 끝 지점만 보면 된다.
+        시작점asc 끝점desc 로 정렬을 했으므로, 현재 인터벌이 현재 가장 오른쪽 지점보다 클 경우가 커버가 안되는 경우이므로
+        count 를 늘려주고, 가장 오른쪽 지점을 최신화 시켜준다.
+     */
     public int removeCoveredIntervals(int[][] intervals) {
         Deque<int[]> queue = new LinkedList<>();
 
