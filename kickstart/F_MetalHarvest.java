@@ -33,23 +33,18 @@ public class F_MetalHarvest {
                 time = Math.max(time, times[i][0]);
                 if (time >= times[i][1]) continue;
 
-                if (intervals[i] <= K) {
-                    ans++;
-                    time = time + K;
+                int comp = times[i][1] - time;
+                int next = 0;
+
+                if ((comp % K) == 0) {
+                    next = comp / K;
                 } else {
-                    int comp = times[i][1] - time;
-                    int next = 0;
-
-                    if ((comp % K) == 0) {
-                        next = comp / K;
-                    } else {
-                        next = (comp / K) + 1;
-                    }
-
-                    time = time + next * K;
-                    ans += next;
-
+                    next = (comp / K) + 1;
                 }
+
+                time = time + next * K;
+                ans += next;
+
             }
 
 
